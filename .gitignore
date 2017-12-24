@@ -59,4 +59,7 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# virtualenv
 .venv/
+
+bower_components/
