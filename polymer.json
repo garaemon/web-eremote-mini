@@ -1,0 +1,11 @@
+{
+  "lint": {
+    "sources": [
+        "browser/**/*",
+        "ts_build/**/*"
+    ],
+    "rules": [
+      "polymer-2"
+    ]
+  }
+}

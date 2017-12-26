@@ -63,3 +63,6 @@ docs/_build/
 .venv/
 
 bower_components/
+node_modules/
+ts_build/
+sandbox/

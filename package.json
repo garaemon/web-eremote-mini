@@ -1,0 +1,33 @@
+{
+  "name": "web-eremote-mini",
+  "version": "0.0.1",
+  "description": "",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "gulp": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garaemon/web-eremote-mini.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/garaemon/web-eremote-mini/issues"
+  },
+  "homepage": "https://github.com/garaemon/web-eremote-mini#readme",
+  "devDependencies": {
+    "@polymer/gen-typescript-declarations": "^0.3.4",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.6.2",
+    "gulp-typescript": "^3.2.3",
+    "merge-stream": "^1.0.1",
+    "polymer": "^0.5.0",
+    "polymer-build": "^2.1.1",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {}
+}
