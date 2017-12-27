@@ -1,0 +1,34 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="../command-cell/command-cell.html">
+
+<dom-module id="command-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin-top: 2em;
+        padding-left: 2em;
+        padding-right: 2em;
+      }
+      command-cell {
+        margin-top: 2em;
+      }
+    </style>
+    <iron-ajax id="queryCommands" url="/api/commands" handle-as="json"></iron-ajax>
+    <div>
+      <div>Registered Commands:</div>
+      <template is="dom-repeat" items="{{_commands}}" as="command">
+        <command-cell on-command-cell-deleted="_onCommandCellDeleted"
+                      command-name="[[command.0]]"
+                      command-code="[[command.1]]">
+        </command-cell>
+      </template>
+    </div>
+  </template>
+
+  <script src="../../ts_build/command-list/command-list.js">
+  </script>
+</dom-module>

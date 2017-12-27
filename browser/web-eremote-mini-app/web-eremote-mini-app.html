@@ -1,13 +1,44 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../detect-devices-button/detect-devices-button.html">
+<link rel="import" href="../learn-button/learn-button.html">
+<link rel="import" href="../command-list/command-list.html">
+
 
 <dom-module id="web-eremote-mini-app">
   <template>
     <style>
-      :host {
-        display: block;
+      app-header {
+        background-color: var(--paper-blue-500);
+        color: white;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <app-header-layout>
+
+      <app-header slot="header" reveals effects="waterfall">
+        <app-toolbar>
+          <div main-title>E Remote Mini</div>
+        </app-toolbar>
+      </app-header>
+
+    </app-header-layout>
+
+    <detect-devices-button></detect-devices-button>
+    <learn-button on-learn-button-command-remembered="_onLearnButtonCommandRemembered">
+    </learn-button>
+    <command-list id="commandList"
+                  on-command-list-deleted="_onCommandListDeleted">
+    </command-list>
   </template>
 
   <script src="../../ts_build/web-eremote-mini-app/web-eremote-mini-app.js">

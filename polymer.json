@@ -1,8 +1,8 @@
 {
   "lint": {
     "sources": [
-        "browser/**/*",
-        "ts_build/**/*"
+        "browser/**/*.html",
+        "ts_build/**/*.js"
     ],
     "rules": [
       "polymer-2"

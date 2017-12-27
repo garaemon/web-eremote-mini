@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+
+<link rel="import" href="../code-formatter/code-formatter.html">
+
+<dom-module id="remember-button">
+  <template>
+    <style>
+      #successToast {
+        --paper-toast-background-color: var(--paper-green-300);
+      }
+    </style>
+    <paper-button raised on-tap="_onTap">
+      Remember
+    </paper-button>
+    <paper-spinner id="spinner"></paper-spinner>
+    <iron-ajax id="ajaxRemember"
+              url="/api/remember" handle-as="json" method="POST"
+               content-type="application/json"
+               body='{"code": "[[code]]", "name": "[[_commandName]]"}'>
+
+              </iron-ajax>
+    <paper-dialog id="successDialog">
+      <h2>Success to remember ir code</h2>
+    </paper-dialog>
+    <paper-dialog id="errorDialog">
+      <h2>Failed to remember ir code</h2>
+    </paper-dialog>
+    <paper-dialog id="inputDialog">
+        <h2>Please input command name</h2>
+        <paper-dialog-scrollable>
+          <code-formatter code="[[code]]"></code-formatter>
+        </paper-dialog-scrollable>
+        <paper-input label="command" value="{{_commandName}}"></paper-input>
+        <paper-button raised on-tap="_onSaveTapped">Save</paper-button>
+    </paper-dialog>
+    <paper-toast id="successToast" vertical-align="top"></paper-toast>
+  </template>
+  <script src="../../ts_build/remember-button/remember-button.js">
+  </script>
+</dom-module>

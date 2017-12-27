@@ -1,0 +1,41 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+
+<link rel="import" href="../remember-button/remember-button.html">
+<link rel="import" href="../code-formatter/code-formatter.html">
+
+<dom-module id="learn-button">
+  <template>
+    <style>
+    </style>
+    <paper-button raised on-tap="_onTap">
+      <iron-icon icon="icons:refresh">
+      </iron-icon>
+      Learn
+    </paper-button>
+    <paper-spinner id="spinner"></paper-spinner>
+    <iron-ajax id="ajaxLearn" url="/api/learn" handle-as="json">
+    </iron-ajax>
+    <paper-dialog id="successDialog">
+      <h2>Success to learn ir code</h2>
+      <paper-dialog-scrollable>
+        <code-formatter code="[[_ir_code]]"></code-formatter>
+      </paper-dialog-scrollable>
+      <remember-button id="rememberButton"
+                       on-remember-button-dialog-closed="_onRememberButtonDialogClosed"
+                       code="[[_ir_code]]">
+      </remember-button>
+    </paper-dialog>
+    <paper-dialog id="errorDialog">
+      <h2>Failed to get ir code</h2>
+    </paper-dialog>
+  </template>
+  <script src="../../ts_build/learn-button/learn-button.js">
+  </script>
+</dom-module>

@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+
+<dom-module id="code-formatter">
+  <template>
+    <style>
+      :root {
+        --code-format-max-character: 3em;
+      }
+      :host {
+        display: block
+      }
+      #code-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .code-cell {
+        margin-left: 0.1em;
+        margin-right: 0.1em;
+        height: var(--code-format-max-character);
+        line-height: var(--code-format-max-character);
+        width: var(--code-format-max-character);
+        text-align: center;
+        border: 1px solid var(--paper-grey-500);
+      }
+      .code-cell:nth-child(2n) {
+        background-color: white;
+      }
+      .code-cell:nth-child(2n + 1) {
+        background-color: var(--paper-grey-100);
+      }
+
+    </style>
+    <div id="container">
+      <div id="code-length">
+        Code length: [[code.length]]
+      </div>
+      <div id="code-container">
+        <template is="dom-repeat" items="{{code}}">
+            <div class="code-cell">
+              [[item]]
+            </div>
+        </template>
+      </div>
+    </div>
+  </template>
+  <script src="../../ts_build/code-formatter/code-formatter.js">
+  </script>
+</dom-module>
