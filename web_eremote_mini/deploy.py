@@ -38,7 +38,14 @@ def install_python(hostname, version='3.5.2'):
 def deploy_source_code(hostname, target_directory):
     'Copy source code to remote host'
     exclude_directories = [
-        '.venv', '.idea', '.git', '__pycache__', '*.pyc', 'node_modules', 'bower_components', 'ts_build',
+        '.venv',
+        '.idea',
+        '.git',
+        '__pycache__',
+        '*.pyc',
+        'node_modules',
+        'bower_components',
+        'ts_build',
     ]
     from_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     exclude_options = ['--exclude=%s' % d for d in exclude_directories]
@@ -79,7 +86,6 @@ def setup_systemd(hostname, target_directory):
     ]
     print(concatenate_shell_commands(commands))
     subprocess.check_call(['ssh', hostname, concatenate_shell_commands(commands)])
-
 
 
 def main_impl(hostname, target_directory):
