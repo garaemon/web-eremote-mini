@@ -21,6 +21,7 @@ tests_require = [
     'ipdb',
     'coveralls',
     'sphinx',
+    'pylint',
 ]
 
 setup(
@@ -53,7 +54,6 @@ Web UI for eremote mini
         'broadlink',
         'flask',
         'plyvel',
-        'pylint',
         'fire',
     ],
     extras_require={
@@ -63,6 +63,7 @@ Web UI for eremote mini
         'console_scripts': [
             # add cli scripts here in this form:
             'web-eremote-mini=web_eremote_mini.cli:main',
+            'web-eremote-mini-deploy=web_eremote_mini.deploy:main',
         ],
     },
 )
