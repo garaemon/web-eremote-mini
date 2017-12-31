@@ -6,7 +6,8 @@
     "test": "tests"
   },
   "scripts": {
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "bower": "bower"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/garaemon/web-eremote-mini#readme",
   "devDependencies": {
     "@polymer/gen-typescript-declarations": "^0.3.4",
+    "bower": "^1.8.2",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-debounce": "^1.0.2",
