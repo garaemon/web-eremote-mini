@@ -14,11 +14,23 @@ PYENV_SETUP_COMMANDS = [
     'eval "$(pyenv virtualenv-init -)"'
 ]
 
+NVM_INSTALL_URL = 'https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh'
+
+NVM_SETUP_COMMANDS = [
+    'source ~/.nvm/nvm.sh',
+]
+
 
 def install_pyenv(hostname):
     'Install pyenv on remote host via ssh'
     print('> Installing pyenv')
     subprocess.check_call(['ssh', hostname, 'curl -L %s | bash' % PYENV_INSTALLER_URL])
+
+
+def install_nvm(hostname):
+    'Install nvm on remote host via ssh'
+    print('> Installing nvm')
+    subprocess.check_call(['ssh', hostname, 'curl -o- %s | bash' % NVM_INSTALL_URL])
 
 
 def concatenate_shell_commands(commands, separator=';'):
@@ -30,7 +42,17 @@ def install_python(hostname, version='3.5.2'):
     'Install python using pyenv on remote host'
     commands = PYENV_SETUP_COMMANDS + [
         'pyenv install %s -s' % version,
-        'pyenv global %s' % version, 'pip install -U virtualenv'
+        'pyenv global %s' % version,
+        'pip install -U virtualenv',
+    ]
+    subprocess.check_call(['ssh', hostname, concatenate_shell_commands(commands)])
+
+
+def install_node(hostname, version='8.9.3'):
+    'Install python using pyenv on remote host'
+    commands = NVM_SETUP_COMMANDS + [
+        'nvm install %s' % version,
+        'nvm use %s' % version,
     ]
     subprocess.check_call(['ssh', hostname, concatenate_shell_commands(commands)])
 
@@ -54,11 +76,14 @@ def deploy_source_code(hostname, target_directory):
         [from_directory + '/', '%s:%s/' % (hostname, target_directory)])
 
 
-def build_code(hostname, target_directory):
-    'Build code using `python setup.py develop` on remote host'
+def build_python_code(hostname, target_directory):
+    'Build python code using `python setup.py develop` on remote host'
     # install libleveldb-dev is required
     commands = PYENV_SETUP_COMMANDS + [
-        'cd %s' % target_directory, 'make', 'source .venv/bin/activate', 'python setup.py develop'
+        'cd %s' % target_directory,
+        'test -d .venv || virtualenv .venv',
+        'source .venv/bin/activate',
+        'python setup.py develop',
     ]
     subprocess.check_call(['ssh', hostname, concatenate_shell_commands(commands)])
 
@@ -82,9 +107,26 @@ def setup_systemd(hostname, target_directory):
         'cp ${PWD}/%s ${HOME}/.config/systemd/user/' % service_file,
         'systemctl --user daemon-reload',
         'systemctl --user enable web-eremote-mini',
-        'systemctl --user restart web-eremote-mini'
+        'systemctl --user restart web-eremote-mini',
     ]
     print(concatenate_shell_commands(commands))
+    subprocess.check_call(['ssh', hostname, concatenate_shell_commands(commands)])
+
+
+def install_npm_packages(hostname, target_directory):
+    commands = NVM_SETUP_COMMANDS + [
+        'cd %s' % target_directory,
+        'npm install',
+    ]
+    subprocess.check_call(['ssh', hostname, concatenate_shell_commands(commands)])
+
+
+def build_polymer(hostname, target_directory):
+    commands = NVM_SETUP_COMMANDS + [
+        'cd %s' % target_directory,
+        'npm run bower install',
+        'npm run gulp',
+    ]
     subprocess.check_call(['ssh', hostname, concatenate_shell_commands(commands)])
 
 
@@ -93,8 +135,12 @@ def main_impl(hostname, target_directory):
     print('> Start deploying to %s' % hostname)
     install_pyenv(hostname)
     install_python(hostname)
+    install_nvm(hostname)
+    install_node(hostname)
+    install_npm_packages(hostname, target_directory)
     deploy_source_code(hostname, target_directory)
-    build_code(hostname, target_directory)
+    build_python_code(hostname, target_directory)
+    build_polymer(hostname, target_directory)
     copy_environmental_variables(hostname, target_directory)
     setup_systemd(hostname, target_directory)
     print('Please run `sudo loginctl enable-linger ${USER}` to enable auto start')
